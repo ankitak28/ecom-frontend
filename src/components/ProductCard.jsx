@@ -6,7 +6,7 @@ const ProductCard = ({
   productId,
   productName,
   image,
-  description,
+  productDescription,
   quantity,
   price,
   discount,
@@ -29,7 +29,7 @@ const ProductCard = ({
               productId,
               productName,
               image,
-              description,
+              productDescription,
               quantity,
               price,
               discount,
@@ -51,7 +51,7 @@ const ProductCard = ({
                 productId,
                 productName,
                 image,
-                description,
+                productDescription,
                 quantity,
                 price,
                 discount,
@@ -63,7 +63,7 @@ const ProductCard = ({
             {productName}
           </h2>
           <div className="min-h-20 max-h-20">
-            <p className="text-gray-600 text-sm">{description}</p>
+            <p className="text-gray-600 text-sm">{productDescription}</p>
           </div>
           <div className="flex items-center justify-between">
             {specialPrice ? (
