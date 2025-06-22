@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import ProductViewModal from "./ProductViewModal";
-import truncateText from "../../utils/truncateText";
+import { truncateText } from "../../utils/truncateText";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../store/actions";
 import toast from "react-hot-toast";
@@ -100,15 +100,17 @@ const ProductCard = ({
 
             <button
               disabled={!isAvailable || btnLoader}
-              onClick={addToCartHandler({
-                image,
-                productName,
-                productDescription,
-                specialPrice,
-                price,
-                productId,
-                quantity,
-              })}
+              onClick={() => {
+                addToCartHandler({
+                  image,
+                  productName,
+                  productDescription,
+                  specialPrice,
+                  price,
+                  productId,
+                  quantity,
+                });
+              }}
               className={`bg-blue-500 ${
                 isAvailable ? "opacity-100 hover:bg-blue-600" : "opacity-70"
               }
