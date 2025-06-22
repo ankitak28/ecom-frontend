@@ -1,4 +1,3 @@
-import { send } from "vite";
 import api from "../../api/api";
 
 export const fetchProducts = (queryString) => async (dispatch) => {
