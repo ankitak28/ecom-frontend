@@ -137,3 +137,67 @@ export const authenticateSignInUser
             setLoader(false);
         }
     }
+export const registerNewUser
+    = (sendData, toast, reset, navigate, setLoader) => async (dispatch) => {
+        try {
+            setLoader(true);
+            const { data } = await api.post("/auth/signup", sendData);
+            reset();
+            toast.success(data?.message || "User Registered Successfully!");
+            navigate("/login");
+
+        } catch (error) {
+            console.log(error);
+            toast.error(error?.response?.data?.message || error?.response?.data?.password || "Internal Server Error");
+        } finally {
+            setLoader(false);
+        }
+    }
+
+export const logOutUser = (navigate) => (dispatch) => {
+    dispatch({ type: "LOGOUT_USER" });
+    localStorage.removeItem("auth");
+    navigate("/login");
+}
+
+export const addUpdateUserAddress = (sendData, toast, addressId, setOpenAddressModal) => async (dispatch, getState) => {
+    dispatch({ type: "BUTTON_LOADER" });
+    try {
+        const { user } = getState().auth;
+        const { data } = await api.post("/addresses", sendData);
+        toast.success("Address Saved Successfully!");
+        dispatch({ type: "IS_SUCCESS" })
+    } catch (error) {
+        console.log(error);
+        toast.error(error?.response?.data?.message || "Internal Server Error");
+        dispatch({ type: "IS_ERROR", payload: null })
+    } finally {
+        setOpenAddressModal(false);
+    }
+}
+
+export const getUserAddresses = () => async (dispatch, getState) => {
+
+    try {
+        dispatch({
+            type: "IS_FETCHING"
+        });
+        const { data } = await api.get(`/addresses`);
+
+        dispatch({
+            type: 'USER_ADDRESS',
+            payload: data
+        });
+        dispatch({
+            type: "IS_SUCCESS"
+        });
+    } catch (error) {
+        console.log(error);
+
+        dispatch({
+            type: "HAS_ERROR",
+            payload: error?.response?.data?.message || "Failed to fetch user addresses."
+        })
+
+    }
+};
