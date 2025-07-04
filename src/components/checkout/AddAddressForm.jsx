@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import InputField from "../shared/InputField";
 import { FaAddressBook } from "react-icons/fa6";
@@ -14,6 +14,7 @@ const AddAddressForm = ({ address, setOpenAddressModal }) => {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: "onTouched",
@@ -23,12 +24,23 @@ const AddAddressForm = ({ address, setOpenAddressModal }) => {
       addUpdateUserAddress(data, toast, address?.addressId, setOpenAddressModal)
     );
   };
+  useEffect(() => {
+    if (address?.addressId) {
+      setValue("buildingName", address?.buildingName);
+      setValue("city", address?.city);
+      setValue("state", address?.state);
+      setValue("pincode", address?.pincode);
+      setValue("street", address?.street);
+      setValue("country", address?.country);
+    }
+  }, [address]);
+
   return (
     <div className="">
       <form onSubmit={handleSubmit(onSaveAddressHandler)} className="">
         <div className="flex items-center justify-center mb-4 font-semibold text-2xl text-slate-800 py-2 px-4 ">
           <FaAddressBook className="mr-2 text-2xl" />
-          Add Address
+          {!address?.addressId ? "Add Address" : "Update Address"}
         </div>
         <div className="flex flex-col gap-4">
           <InputField

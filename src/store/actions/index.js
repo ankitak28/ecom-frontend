@@ -163,8 +163,13 @@ export const logOutUser = (navigate) => (dispatch) => {
 export const addUpdateUserAddress = (sendData, toast, addressId, setOpenAddressModal) => async (dispatch, getState) => {
     dispatch({ type: "BUTTON_LOADER" });
     try {
-        const { user } = getState().auth;
-        const { data } = await api.post("/addresses", sendData);
+        if (!addressId) {
+            const { data } = await api.post("/addresses", sendData);
+
+        } else {
+            await api.put(`/addresses/${addressId}`, sendData);
+        }
+        dispatch(getUserAddresses());
         toast.success("Address Saved Successfully!");
         dispatch({ type: "IS_SUCCESS" })
     } catch (error) {
@@ -201,3 +206,10 @@ export const getUserAddresses = () => async (dispatch, getState) => {
 
     }
 };
+
+export const selectUserCheckoutAddress = (address) => {
+    return {
+        type: "SELECT_CHECKOUT_ADDRESS",
+        payload: address,
+    }
+}

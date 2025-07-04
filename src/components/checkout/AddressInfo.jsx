@@ -11,9 +11,14 @@ const AddressInfo = ({ address }) => {
   const { isLoading, btnLoader } = useSelector((state) => state.errors);
 
   const [openAddressModal, setOpenAddressModal] = useState(false);
-  const [selectAddress, setSelectAddress] = useState();
+  const [selectedAddress, setSelectedAddress] = useState();
   const addNewAddressHandler = () => {
-    setSelectAddress("");
+    setSelectedAddress("");
+    setOpenAddressModal(true);
+  };
+
+  const deleteAddressHandler = () => {
+    setSelectedAddress("");
     setOpenAddressModal(true);
   };
   return (
@@ -48,7 +53,7 @@ const AddressInfo = ({ address }) => {
               <div className="space-y-4 pt-6">
                 <AddressList
                   addresses={address}
-                  setSelectAddress={setSelectAddress}
+                  setSelectedAddress={setSelectedAddress}
                   setOpenAddressModal={setOpenAddressModal}
                 />
               </div>
@@ -68,7 +73,7 @@ const AddressInfo = ({ address }) => {
       )}
       <AddressInfoModal open={openAddressModal} setOpen={setOpenAddressModal}>
         <AddAddressForm
-          address={selectAddress}
+          address={selectedAddress}
           setOpenAddressModal={setOpenAddressModal}
         />
       </AddressInfoModal>
