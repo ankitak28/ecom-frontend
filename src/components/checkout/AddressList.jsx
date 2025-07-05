@@ -9,6 +9,7 @@ const AddressList = ({
   addresses,
   setSelectedAddress,
   setOpenAddressModal,
+  setOpenDeleteModal,
 }) => {
   const dispatch = useDispatch();
   const { selectedUserCheckoutAddress } = useSelector((state) => state.auth);
@@ -21,6 +22,7 @@ const AddressList = ({
   };
   const onDeleteButtonHandler = (address) => {
     setSelectedAddress(address);
+    setOpenDeleteModal(true);
   };
   return (
     <div className="space-y-4">
