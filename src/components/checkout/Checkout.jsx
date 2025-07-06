@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserAddresses } from "../../store/actions";
 import { Button } from "@headlessui/react";
 import toast from "react-hot-toast";
+import ErrorPage from "../shared/ErrorPage";
+import PaymentMethod from "./PaymentMethod";
 
 const Checkout = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -28,7 +30,7 @@ const Checkout = () => {
       toast.error("Please select checkout address before proceeding.");
       return;
     }
-    if ((activeStep === 1 && !selectedUserCheckoutAddress) || !paymentMethod) {
+    if (activeStep === 1 && !paymentMethod) {
       toast.error("Please select payment method before proceeding.");
       return;
     }
@@ -51,6 +53,7 @@ const Checkout = () => {
       ) : (
         <div className="mt-5">
           {activeStep === 0 && <AddressInfo address={address} />}
+          {activeStep === 1 && <PaymentMethod />}
         </div>
       )}
 
@@ -89,6 +92,7 @@ const Checkout = () => {
           </button>
         )}
       </div>
+      {errorMessage && <ErrorPage message={errorMessage} />}
     </div>
   );
 };
