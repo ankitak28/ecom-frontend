@@ -7,11 +7,12 @@ import { Button } from "@headlessui/react";
 import toast from "react-hot-toast";
 import ErrorPage from "../shared/ErrorPage";
 import PaymentMethod from "./PaymentMethod";
+import OrderSummary from "./OrderSummary";
 
 const Checkout = () => {
   const [activeStep, setActiveStep] = useState(0);
   const dispatch = useDispatch();
-  const paymentMethod = false;
+  const paymentMethod = useSelector((state) => state.payment);
   const steps = ["Address", "Payment Method", "Order Summary", "Payment"];
   const { isLoading, errorMessage } = useSelector((state) => state.errors);
   const { address, selectedUserCheckoutAddress } = useSelector(
@@ -54,6 +55,7 @@ const Checkout = () => {
         <div className="mt-5">
           {activeStep === 0 && <AddressInfo address={address} />}
           {activeStep === 1 && <PaymentMethod />}
+          {activeStep === 2 && <OrderSummary />}
         </div>
       )}
 
