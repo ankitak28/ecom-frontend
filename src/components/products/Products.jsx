@@ -5,6 +5,7 @@ import { fetchCategories } from "../../store/actions";
 import Filter from "./Filter";
 import useProductFilter from "../../hooks/useProductFilter";
 import Paginations from "../shared/Paginations";
+import { FaExclamation } from "react-icons/fa6";
 
 const Products = () => {
   const { isLoading, errorMessage } = useSelector((state) => state.errors);
@@ -14,9 +15,10 @@ const Products = () => {
     (state) => state.products
   );
   useProductFilter();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); //useDispatch returned a function
   useEffect(() => {
-    dispatch(fetchCategories());
+    const categories_ = fetchCategories();
+    dispatch(categories_);
   }, [dispatch]);
   // const products = [
   //   {

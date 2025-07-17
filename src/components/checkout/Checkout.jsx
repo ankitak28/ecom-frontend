@@ -13,6 +13,7 @@ const Checkout = () => {
   const [activeStep, setActiveStep] = useState(0);
   const dispatch = useDispatch();
   const paymentMethod = useSelector((state) => state.payment);
+  const { cart, totalPrice } = useSelector((state) => state.carts);
   const steps = ["Address", "Payment Method", "Order Summary", "Payment"];
   const { isLoading, errorMessage } = useSelector((state) => state.errors);
   const { address, selectedUserCheckoutAddress } = useSelector(
@@ -27,6 +28,7 @@ const Checkout = () => {
   };
 
   const handleNext = () => {
+    console.log(paymentMethod);
     if (activeStep === 0 && !selectedUserCheckoutAddress) {
       toast.error("Please select checkout address before proceeding.");
       return;
@@ -55,7 +57,14 @@ const Checkout = () => {
         <div className="mt-5">
           {activeStep === 0 && <AddressInfo address={address} />}
           {activeStep === 1 && <PaymentMethod />}
-          {activeStep === 2 && <OrderSummary />}
+          {activeStep === 2 && (
+            <OrderSummary
+              totalPrice={totalPrice}
+              cart={cart}
+              address={selectedUserCheckoutAddress}
+              paymentMethod={paymentMethod}
+            />
+          )}
         </div>
       )}
 
